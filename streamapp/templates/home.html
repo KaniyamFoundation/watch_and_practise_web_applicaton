@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    {% for item in events %}
+        <div class="card" style="width:400px">
+          <div class="card-body">
+            <h4 class="card-title">{{ item.title }}</h4>
+              <p class="card-text"><b>Session Time:</b> {{ item.event_date }}</p>
+              <p class="card-text">Category: {{ item.category }}</p>
+              <p class="card-text">Tags: {{ item.tags.all|join:", " }}</p>
+              <p class="card-text">Author: {{ item.organiser }}</p>
+              {% if user.is_authenticated %}
+                <a href="/event/{{item.event_id}}" class="btn btn-primary">View</a>
+              {% else %}
+                  <div class="alert alert-danger">
+                      <strong>Login!</strong> to view <a href="#" class="alert-link">session</a>.
+                  </div>
+              {% endif %}
+
+          </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  About
+{% endblock %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="english-container">
+        <p>We are happy to release theis Interactive Online Teaching software at <a href="http://tts.kaniyam.com" rel="nofollow">http://teach.kaniyam.com</a></p>
+        This is made with Ubuntu/Linux, Python, Django, Celery, Postgres etc.</p>
+        <h4>
+        <a id="user-content-introduction"   ></a>Introduction</h4>
+        <p>This online software lets you stream live link and also provides interactive shell for every user</p>
+        <h4>
+        <a id="user-content-how-to-convert" ></a>How to Create Acoount?</h4>
+        <ol>
+        <li>Create an Account here <a href="{% url 'signup' %}" rel="nofollow">signup</a>
+        </li>
+        <li>You will receive an email with account activation link. Click that link.</li>
+        <li>Do login</li>
+        <li>Goto <a href="{% url 'login' %}" rel="nofollow">Login</a>
+        </li>
+        </ol>
+        <h4>
+        <a id="user-content-frequently-asked-questions"   ></a>Frequently Asked Questions</h4>
+        <p>To be Updated soon</p>
+        <h4><b>Contributors</b></h4>
+        <ul>
+            <li>Balaji - <a href="mailto:fossbalaji@gmail.com">fossbalaji@gmail.com</a></li>
+            <li>Arulalan T - <a href="mailto:arulalant@gmail.com">arulalant@gmail.com</a></li>
+        </ul>
+        <h3><a id="user-content-django-web-application-written-and-maintained-by"  ></a>Django web application written and maintained by</h3>
+            <ul><li><p>Balaji - <a href="mailto:fossbalaji@gmail.com">fossbalaji@gmail.com</a></p></li></ul>
+<!--        <h4>-->
+<!--        <a id="user-content-how-to-report-issues"  ></a>How to report issues?</h4>-->
+<!--        <ul>-->
+<!--        <li>Create an account in Github.com</li>-->
+<!--        <li>Create an issue here <a href="https://github.com/KaniyamFoundation/tts-web/issues">https://github.com/KaniyamFoundation/tts-web/issues</a>-->
+<!--        </li>-->
+<!--        <li>Write all the errors, issues, new ideas etc</li>-->
+        </ul>
+        <h4>
+        <a id="user-content-you-can-contribute"  ></a>You can Contribute</h4>
+        <ol>
+        <li>Using the Free/Open Source Software and introducing them to others itself a great contribution.</li>
+        <li>Use this. Report us on any bugs and required features, ideas etc.</li>
+        <li>Spread the news about this in Social media, Print media etc.</li>
+        <li>Donate us. Kaniyam Foundation is working on building such open source software and open digital resources. Your donations will help us do to more.</li>
+        </ol>
+        <h4>
+        <a id="user-content-bank-account-details"  ></a>Bank account details</h4>
+        <p>
+            <h5>Kaniyam Foundation</h5>
+           <h5> Account Number : 606 1010 100 502 79</h5>
+           <h5> Union Bank Of India</h5>
+            <h5>West Tambaram, Chennai</h5>
+            <h5>IFSC – UBIN0560618</h5>
+        </p>
+        <p>
+        Send your name, donation details to <a href="mailto:kaniyamfoundation@gmail.com">kaniyamfoundation@gmail.com</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

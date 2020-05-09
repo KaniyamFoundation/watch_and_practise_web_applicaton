@@ -1,0 +1,11 @@
+*~
+*.pyc
+.idea/
+venv/
+uploads/
+build/
+static/*
+.env
+*.json
+.DS_Store
+envsetup.sh

@@ -1,0 +1,46 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+      <div class="row">
+        <div class="col">
+          <iframe width="100%" height="500px" src="{{ youtube_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div id="examplePadBasic"></div>
+        </div>
+        <div class="col">
+          <div id="terminal">
+            <iframe width="700px" height="500px" src="{{ shell_url }}" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+      <script>
+        $(document).ready(function() {
+          $('#examplePadBasic').pad({
+            'padId': 'Wd2rY4umgc4',
+            host: 'https://board.net',
+            width: '30%',
+            height: '500px',
+            showControls: true,
+            showChat: false,
+            showLineNumbers: true,
+            hideQRCode: true,
+            border: '2px',
+          });
+        });
+      </script>
+</div>
+
+{% endblock %}
