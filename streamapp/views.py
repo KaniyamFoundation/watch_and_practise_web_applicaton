@@ -3,16 +3,16 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
-from datetime import datetime
+from datetime import datetime, date
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.db.models import Q
-from django.views.generic.detail import DetailView
+from django.utils import timezone
 
-from streamapp.utils import account_activation_token
+from streamapp.utils import account_activation_token, get_shell_url_for_user
 from streamapp.models import Event, StreamEvent
 
 
@@ -203,12 +203,35 @@ class HomeView(View):
         
         # get search query here
         search_q = request.GET.get('q')
+        filter_q = request.GET.get('filter_by')
         
         # include search condition also here
         if search_q:
             queryset &= Q(title__icontains=search_q) | Q(tags__name__icontains=search_q)| Q(category__name__icontains=search_q)
+        
+        if filter_q and filter_q in ["Today", "Upcoming", "Past"]:
+            if filter_q == 'Past':
+                queryset &= Q(event_date__lte=datetime.now())
+            elif filter_q == 'Upcoming':
+                queryset &= Q(event_date__gte=datetime.now())
+            else:
+                queryset &= Q(event_date__startswith=date.today())
+        print("*****", queryset)
         events_obj = Event.objects.filter(queryset).order_by(order_by_field).distinct()
-        context = {"events": events_obj}
+        
+        # block view if it's future
+        for event in events_obj:
+            if event.event_date > timezone.now():
+                event.can_view = False
+                event.flag = "upcoming"
+                event.event_url = "#"
+            else:
+                event.can_view = True
+                event.flag = "current"
+                event.event_url = "/event/{}".format(str(event.event_id))
+            print("event_date", event.event_date)
+            print("timezone date", timezone.now())
+        context = {"events": events_obj, "filter": filter_q, "q": search_q}
         return render(request, template_name=template_name, context=context)
     
     @login_required
@@ -236,6 +259,6 @@ class StreamViewAPI(View):
         context["etherpad_url"] = stream_obj.youtube_url
         
         # find the folder path and ttyd url for this user
-        context["shell_url"] = "http://localhost:7681/"
+        context["shell_url"] = get_shell_url_for_user(request.user)
         
         return render(request, template_name=template_name, context=context)
