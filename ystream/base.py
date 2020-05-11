@@ -116,14 +116,10 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 
 # email settings
-FROM_EMAIL = os.environ.get('FROM_EMAIL', 'tamilttsweb@gmail.com')
-EMAIL_PASS = os.environ.get('EMAIL_PASS')
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = FROM_EMAIL
-EMAIL_HOST_PASSWORD = EMAIL_PASS
-EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
+MAILJET_API_KEY = os.environ.get('EMAIL_API_KEY')
+MAILJET_API_SECRET = os.environ.get('EMAIL_API_SECRET')
+FROM_EMAIL=os.environ.get('FROM_EMAIL')
 DEFAULT_FROM_EMAIL = FROM_EMAIL
 
 SERVER_URL = os.environ.get('SERVER_URL', 'http://stream.kaniyam.com')

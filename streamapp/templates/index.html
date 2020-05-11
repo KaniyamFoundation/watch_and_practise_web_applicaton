@@ -10,13 +10,12 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-      <div class="row">
-        <div class="col">
-          <iframe width="100%" height="400px" src="{{ youtube_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+<div class="container vertical" id="streamcontent">
+      <div class="panel-top">
+          <iframe width="100%" height="100%" src="{{ youtube_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
-    <div class="col">
+    <div class="splitter-horizontal"></div>
+    <div class="panel-bottom">
         <ul class="nav nav-pills mb-1 flex-column flex-sm-row" id="myList" role="tablist">
           <li class=" flex-sm-fill text-sm-center nav-item">
             <a class="nav-link active" id="pills-shell-tab" data-toggle="pill" href="#pills-shell" role="tab" aria-controls="pills-shell" aria-selected="true">Shell</a>
@@ -26,16 +25,36 @@
           </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
-          <div class="tab-pane fade show active" id="pills-shell" role="tabpanel" aria-labelledby="pills-shell-tab">
-              <iframe width="100%" height="400px" src="{{ shell_url }}" frameborder="0"></iframe>
-          </div>
-          <div class="tab-pane fade" id="pills-etherpad" role="tabpanel" aria-labelledby="pills-etherpad-tab">
-              <div id="examplePadBasic"></div>
-          </div>
+              <div class="tab-pane fade show active" id="pills-shell" role="tabpanel" aria-labelledby="pills-shell-tab">
+                  <iframe style="position: relative; height: 100%; width: 100%;" src="{{ shell_url }}" frameborder="0"></iframe>
+              </div>
+              <div class="tab-pane fade" id="pills-etherpad" role="tabpanel" aria-labelledby="pills-etherpad-tab">
+                  <div id="examplePadBasic"></div>
+              </div>
         </div>
     </div>
+<!--        <ul class="nav nav-pills mb-1 flex-column flex-sm-row" id="myList" role="tablist">-->
+<!--          <li class=" flex-sm-fill text-sm-center nav-item">-->
+<!--            <a class="nav-link active" id="pills-shell-tab" data-toggle="pill" href="#pills-shell" role="tab" aria-controls="pills-shell" aria-selected="true">Shell</a>-->
+<!--          </li>-->
+<!--          <li class="flex-sm-fill text-sm-center nav-item">-->
+<!--            <a class="nav-link" id="pills-etherpad-tab" data-toggle="pill" href="#pills-etherpad" role="tab" aria-controls="pills-etherpad" aria-selected="false">EtherPad</a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--        <div class="tab-content" id="pills-tabContent">-->
+<!--          <div class="tab-pane fade show active" id="pills-shell" role="tabpanel" aria-labelledby="pills-shell-tab">-->
+<!--              <iframe width="100%" height="400px" src="{{ shell_url }}" frameborder="0"></iframe>-->
+<!--          </div>-->
+<!--          <div class="tab-pane fade" id="pills-etherpad" role="tabpanel" aria-labelledby="pills-etherpad-tab">-->
+<!--              <div id="examplePadBasic"></div>-->
+<!--          </div>-->
+<!--        </div>-->
 
-      <script>
+</div>
+<div class="btn container">
+    <button class="btn-primary" id="toogle-split">Toggle Split</button>
+</div>
+<script>
         $(document).ready(function() {
           $('#examplePadBasic').pad({
             'padId': 'Wd2rY4umgc4',
@@ -50,6 +69,94 @@
           });
         });
       </script>
-</div>
+    <script>
+        function splitHorizontal(){
+           $(".panel-top").resizable({
+            handleSelector: ".splitter-horizontal",
+            resizeHeight: false
+        });
+        }
+        function splitVertical(){
+          $(".panel-top").resizable({
+            handleSelector: ".splitter-horizontal",
+            resizeWidth: false
+          });
+        }
+        var currentsplit = 0;
+        $("#toogle-split").click(function(){
+
+            $(".panel-top").resizable('destroy');
+            $(".panel-top").removeAttr('style');
+              if (currentsplit === 0){
+                splitHorizontal()
+                currentsplit = 1;
+                $("#streamcontent").removeClass('vertical').addClass('horizontal');
+              }
+              else{
+                splitVertical();
+                currentsplit = 0;
+                $("#streamcontent").removeClass('horizontal').addClass('vertical');
+              }
+        });
+
+    splitVertical();
+    </script>
+    <style>
+        .splitter-horizontal {
+          flex: 0 0 auto;
+          background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/hsizegrip.png) center center no-repeat #535353;
+
+          padding: 10px;
+        }
+        .panel-bottom {
+          flex: 1 1 auto;
+          /* resizable */
+          padding: 10px;
+          min-height: 400px;
+          background: #eee;
+        }
+        .panel-top {
+          flex: 0 0 auto;
+          /* only manually resize */
+          padding: 10px;
+          height: 400px;
+          min-height: 200px;
+          overflow: auto;
+        }
+        #streamcontent{
+          display: flex;
+          height: 100vh;
+          min-height: 600px;
+          border: 1px solid silver;
+          overflow: hidden;
+        }
+        #streamcontent.vertical{
+                  flex-direction: column;
+        }
+        #streamcontent.horizontal{
+                  flex-direction: row;
+
+        }
+        #streamcontent.horizontal .splitter-horizontal {
+            cursor: col-resize;
+            width: 18px;
+            min-height: 200px;
+        }
+        #streamcontent.vertical .splitter-horizontal {
+            cursor: row-resize;
+            height: 50px;
+
+        }
+        #streamcontent.vertical .panel-top {
+            width: 100%;
+        }
+        #streamcontent.horizontal .panel-top {
+            min-width: 25%;
+        }
+         #streamcontent.horizontal .panel-bottom {
+            min-width: 25%;
+        }
+
+    </style>
 
 {% endblock %}
