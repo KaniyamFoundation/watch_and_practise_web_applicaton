@@ -13,14 +13,9 @@
         <a class="nav-link" href="{% url 'about' %}">About</a>
       </li>
         {% if user.is_authenticated %}
-<!--            <li class="nav-item dropdown">-->
-<!--                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                  {{ user.email }}-->
-<!--                </a>-->
-<!--                <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>-->
-<!--                </div>-->
-<!--              </li>-->
+             {% if toggle == True %}
+                    <button class="btn-primary" id="toogle-split">Toggle Split</button>
+              {% endif %}
         {% else %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'signup' %}">SignUp</a>

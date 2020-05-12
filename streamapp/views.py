@@ -261,4 +261,6 @@ class StreamViewAPI(View):
         # find the folder path and ttyd url for this user
         context["shell_url"] = get_shell_url_for_user(request.user)
         
+        context["toggle"] =True
+        
         return render(request, template_name=template_name, context=context)
