@@ -10,22 +10,17 @@
 
 {% block content %}
 <div class="container-fluid">
-    <div class="btn-group" style="padding:10px">
-      <button type="button" class="btn btn-success dropdown-toggle" id ="filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {% if filter %}
-          {{ filter }}
-          {% else %}
-           Filter
-          {% endif %}
-      </button>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="?filter_by=Today">Today</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="?filter_by=Upcoming">Upcoming</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="?filter_by=Past">Past</a>
-      </div>
-    </div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link {{ filter }} === 'Today'" href="?filter_by=Today" id="today-tab">Today</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="?filter_by=Upcoming" id="upcoming-tab">Upcoming</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ filter }} === 'Past'" href="?filter_by=Past" id="past-tab">Past</a>
+      </li>
+    </ul>
     <div class="card-deck">
             {% for item in events %}
                 <div class="card" style="width:400px">
@@ -54,8 +49,31 @@
     </div>
 </div>
 <script>
-    $('.dropdown-menu a').click(function(){
-        $('#filter-button').text($(this).text());
-  });
+    $(document).ready(function() {
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+    var filter_by = getUrlParameter('filter_by');
+    if (filter_by === 'Upcoming'){
+            $("#upcoming-tab").addClass('active');
+        }
+       if (filter_by === 'Today'){
+            $("#today-tab").addClass('active');
+        }
+        if (filter_by === 'Past'){
+            $("#past-tab").addClass('active');
+        }
+    });
 </script>
 {% endblock %}
