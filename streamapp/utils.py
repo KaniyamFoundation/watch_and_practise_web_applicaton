@@ -42,7 +42,7 @@ account_activation_token = TokenGenerator()
 
 
 def get_shell_url_for_user(user):
-    shell_url = os.environ.get('SERVER_URL') + "/ttyd/"
+    shell_url = os.environ.get('SERVER_URL') + os.environ.get('SHELL_BASE_URL')
     guests_base_dir = os.environ.get('GUEST_BASE_DIR')
     
     # hash user email by sha256
@@ -51,9 +51,7 @@ def get_shell_url_for_user(user):
     # specified user directory path
     create_dir_path = guests_base_dir + result.hexdigest()
     
-    # if path already exists ignore
-    #os.makedirs(create_dir_path, exist_ok=True)
-    
     # for shell url now with user directory path
     shell_url += "?arg={}&arg={}".format(create_dir_path, str(user.id))
+    
     return shell_url

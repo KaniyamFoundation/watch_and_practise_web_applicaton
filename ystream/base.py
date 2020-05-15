@@ -122,4 +122,4 @@ MAILJET_API_SECRET = os.environ.get('EMAIL_API_SECRET')
 FROM_EMAIL=os.environ.get('FROM_EMAIL')
 DEFAULT_FROM_EMAIL = FROM_EMAIL
 
-SERVER_URL = os.environ.get('SERVER_URL', 'http://stream.kaniyam.com')
+SERVER_URL = os.environ.get('SERVER_URL')
