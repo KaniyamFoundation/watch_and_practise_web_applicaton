@@ -1,6 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.contrib.postgres.fields import ArrayField, JSONField
 
 import uuid
 
@@ -34,7 +32,7 @@ class Organizer(models.Model):
 		name = models.CharField(max_length=255, null=False, blank=False)
 		profession = models.CharField(max_length=255, null=True, blank=True)
 		description = models.TextField(null=True, blank=True)
-		social_links = JSONField(null=True)
+		social_links = models.URLField(null=True)
 		city = models.CharField(max_length=155, null=True, blank=True)
 		state = models.CharField(max_length=155, null=True, blank=True)
 		country = models.CharField(max_length=100, null=True, blank=True)
